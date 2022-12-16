@@ -3,9 +3,11 @@ package main
 import (
 	"embed"
 	"io/fs"
+	"log"
 	"net/http"
 	"os"
 	"os/signal"
+	"strings"
 
 	// "os/exec"
 	"syscall"
@@ -30,6 +32,24 @@ func main() {
 		// })
 		staticFiles, _ := fs.Sub(FS, "frontend/dist")
 		router.StaticFS("/static", http.FS(staticFiles))
+		router.NoRoute(func(c *gin.Context) {
+			path := c.Request.URL.Path
+			if strings.HasPrefix(path, "/static") {
+				reader, err := staticFiles.Open("index.html")
+				if err != nil {
+					log.Fatal(err)
+				}
+				defer reader.Close()
+				stat, err := reader.Stat()
+				if err != nil {
+					log.Fatal(err)
+				}
+				c.DataFromReader(http.StatusOK, stat.Size(), "text/html", reader, nil)
+			} else {
+				// c.Status(http.StatusNotFound)
+				c.Status(404)
+			}
+		})
 		router.Run(":8080")
 	}()
 
