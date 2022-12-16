@@ -44,7 +44,7 @@ func main() {
 				if err != nil {
 					log.Fatal(err)
 				}
-				c.DataFromReader(http.StatusOK, stat.Size(), "text/html", reader, nil)
+				c.DataFromReader(http.StatusOK, stat.Size(), "text/html;charset=utf-8", reader, nil)
 			} else {
 				// c.Status(http.StatusNotFound)
 				c.Status(404)
