@@ -14,7 +14,7 @@ func main() {
 	chSignal := make(chan os.Signal, 1)
 	signal.Notify(chSignal, syscall.SIGINT, syscall.SIGTERM)
 
-	// select 阻塞目前線程
+	// select 監聽可讀可寫的chan 沒有值的話阻塞目前線程 隨機輪詢
 	select {
 	case <-ui.Done():
 	case <-chSignal:
