@@ -17,6 +17,8 @@ import (
 	// "github.com/nepail/lorca"
 )
 
+// 把指定目錄的檔案嵌入到exe
+//
 //go:embed frontend/dist/*
 var FS embed.FS
 
