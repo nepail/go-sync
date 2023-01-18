@@ -57,7 +57,7 @@ func main() {
 	var ui lorca.UI
 	// ui, _ = lorca.New("http://google.com", "", 800, 600, "--disable-sync", "--disable-translate")
 	// localhost 不走代理，所以必須使用127.0.0.1
-	ui, _ = lorca.New("http://127.0.0.1:8080/static/index.html", "", 800, 600, "--disable-sync", "--disable-translate")
+	ui, _ = lorca.New("http://localhost:8080/static/index.html", "", 800, 600, "--disable-sync", "--disable-translate")
 	// ui, _ = lorca.New("https://term.ptt.cc", "", 800, 600, "--disable-sync", "--disable-translate")
 	chSignal := make(chan os.Signal, 1)
 	signal.Notify(chSignal, syscall.SIGINT, syscall.SIGTERM, os.Interrupt)
