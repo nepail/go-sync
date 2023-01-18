@@ -21,6 +21,7 @@ import (
 
 	// "github.com/nepail/lorca"
 	"github.com/google/uuid"
+	"github.com/skip2/go-qrcode"
 )
 
 // 把指定目錄的檔案嵌入到exe
@@ -40,6 +41,7 @@ func main() {
 		// 	c.String(http.StatusOK, "<h1> Hello World </h1>")
 		// })
 		staticFiles, _ := fs.Sub(FS, "frontend/dist")
+		router.GET("/api/v1/qrcodes", QrcodeController)
 		router.GET("/uploads/:path", UploadsController)
 		router.GET("/api/v1/addresses", AddressesController)
 		router.POST("/api/v1/texts", TextsController)
@@ -155,5 +157,17 @@ func UploadsController(c *gin.Context) {
 		c.File(target)
 	} else {
 		c.Status(http.StatusNotFound)
+	}
+}
+
+func QrcodeController(c *gin.Context) {
+	if content := c.Query("content"); content != "" {
+		png, err := qrcode.Encode(content, qrcode.Medium, 256)
+		if err != nil {
+			log.Fatal(err)
+		}
+		c.Data(http.StatusOK, "imge/png", png)
+	} else {
+		c.Status(http.StatusBadRequest)
 	}
 }
