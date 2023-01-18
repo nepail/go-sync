@@ -88,6 +88,7 @@ func main() {
 }
 
 func TextsController(c *gin.Context) {
+
 	var json struct {
 		Raw string `json:"raw"`
 	}
