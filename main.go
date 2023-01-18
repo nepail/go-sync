@@ -3,10 +3,13 @@ package main
 import (
 	"embed"
 	"io/fs"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
+	"path"
+	"path/filepath"
 	"strings"
 
 	// "os/exec"
@@ -14,7 +17,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/zserge/lorca"
+
 	// "github.com/nepail/lorca"
+	"github.com/google/uuid"
 )
 
 // 把指定目錄的檔案嵌入到exe
@@ -34,6 +39,7 @@ func main() {
 		// 	c.String(http.StatusOK, "<h1> Hello World </h1>")
 		// })
 		staticFiles, _ := fs.Sub(FS, "frontend/dist")
+		router.POST("/api/v1/texts", TextsController)
 		router.StaticFS("/static", http.FS(staticFiles))
 		router.NoRoute(func(c *gin.Context) {
 			path := c.Request.URL.Path
@@ -79,4 +85,35 @@ func main() {
 	// 等待命令
 	// <-chSignal
 	// cmd.Process.Kill()
+}
+
+func TextsController(c *gin.Context) {
+	var json struct {
+		Raw string `json:"raw"`
+	}
+
+	if err := c.ShouldBindJSON(&json); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	} else {
+		exe, err := os.Executable()
+		if err != nil {
+			log.Fatal(err)
+		}
+		dir := filepath.Dir(exe)
+		if err != nil {
+			log.Fatal(err)
+		}
+		filename := uuid.New().String()
+		uploads := filepath.Join(dir, "uploads")
+		err = os.MkdirAll(uploads, os.ModePerm)
+		if err != nil {
+			log.Fatal(err)
+		}
+		fullpath := path.Join("uploads", filename+".txt")
+		err = ioutil.WriteFile(filepath.Join(dir, fullpath), []byte(json.Raw), 0644)
+		if err != nil {
+			log.Fatal(err)
+		}
+		c.JSON(http.StatusOK, gin.H{"url": "/" + fullpath})
+	}
 }
