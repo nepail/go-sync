@@ -40,6 +40,7 @@ func main() {
 		// 	c.String(http.StatusOK, "<h1> Hello World </h1>")
 		// })
 		staticFiles, _ := fs.Sub(FS, "frontend/dist")
+		router.GET("/uploads/:path", UploadsController)
 		router.GET("/api/v1/addresses", AddressesController)
 		router.POST("/api/v1/texts", TextsController)
 		router.StaticFS("/static", http.FS(staticFiles))
@@ -132,4 +133,27 @@ func AddressesController(c *gin.Context) {
 		}
 	}
 	c.JSON(http.StatusOK, gin.H{"addresses": result})
+}
+
+func GetUploadsDir() (uploads string) {
+	exe, err := os.Executable()
+	if err != nil {
+		log.Fatal(err)
+	}
+	dir := filepath.Dir(exe)
+	uploads = filepath.Join(dir, "uploads")
+	return
+}
+
+func UploadsController(c *gin.Context) {
+	if path := c.Param("path"); path != "" {
+		target := filepath.Join(GetUploadsDir(), path)
+		c.Header("Content-Description", "File Transfer")
+		c.Header("Content-Transfer-Encoding", "binary")
+		c.Header("Content-Disposition", "attachment; filename"+path)
+		c.Header("Content-Type", "application/octet-stream")
+		c.File(target)
+	} else {
+		c.Status(http.StatusNotFound)
+	}
 }
