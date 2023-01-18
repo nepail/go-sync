@@ -46,7 +46,7 @@ export const UploadScreenshotForm = () => {
             onChange={onChange}
             accept="image/*;capture=camera"
           />
-          <p>点击选择图片 或 直接粘贴图片</p>
+          <p>點擊選擇圖片 或 直接貼上圖片</p>
         </Box>
       </div>
     </Form>

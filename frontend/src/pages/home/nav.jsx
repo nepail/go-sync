@@ -18,17 +18,17 @@ export const nav = (
     <ul>
       <li>
         <NavLink to="/message" activeClassName="selected">
-          传消息
+          傳訊息
         </NavLink>
       </li>
       <li>
         <NavLink to="/file" activeClassName="selected">
-          传文件
+          傳文件
         </NavLink>
       </li>
       <li>
         <NavLink to="/screenshot" activeClassName="selected">
-          传截图
+          傳截圖
         </NavLink>
       </li>
     </ul>

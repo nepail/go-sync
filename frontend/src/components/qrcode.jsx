@@ -23,9 +23,9 @@ export const Qrcode = ({ content }) => {
       .finally(() => setLoading(false));
   }, [content]);
   return loading ? (
-    <MyLoading>加载中</MyLoading>
+    <MyLoading>載入中</MyLoading>
   ) : error ? (
-    <div>加载二维码出错：{JSON.stringify(error)}</div>
+    <div>載入 QRCode 錯誤：{JSON.stringify(error)}</div>
   ) : (
     image
   );

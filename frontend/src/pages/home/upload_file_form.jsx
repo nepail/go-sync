@@ -59,7 +59,7 @@ export const UploadFileForm = () => {
           className={boxClass}
         >
           <FileInput type="file" value="" onChange={onChange} />
-          <p>点击打开文件 或 拖拽文件至此</p>
+          <p>點擊打開檔案 或 拖曳檔案至此</p>
         </Box>
       </div>
     </Form>

@@ -70,18 +70,18 @@ const UploadSuccessDialog = ({ content, onClose }) => {
   content = typeof content === "string" ? content : content(address)
   return (
     <Pop>
-      <H2>上传成功</H2>
+      <H2>上傳成功</H2>
       {addressesRef.current ?
         <div>
           <P>
-            请 Windows 用户在防火墙入站规则中开通 27149 端口（<a href="https://jingyan.baidu.com/article/09ea3ede7311dec0afde3977.html" target="_blank" rel="noreferrer">教程</a>）
+            請 Windows 使用者在防火牆入站規則開啟 27149 端口（<a href="https://jingyan.baidu.com/article/09ea3ede7311dec0afde3977.html" target="_blank" rel="noreferrer">教程</a>）
           </P>
           <P>
             <Label>
-              <Span>请选择手机可以访问的局域网IP</Span>
+              <Span>請選擇手機可以訪問的區域網IP</Span>
               <select value={address} onChange={onChange}>
                 <option value="" disabled>
-                  - 请选择 -
+                  - 請選擇 -
                 </option>
                 {addressesRef.current?.map((string) => (
                   <option key={string}>{string}</option>
@@ -96,11 +96,11 @@ const UploadSuccessDialog = ({ content, onClose }) => {
         {content ? <Qrcode content={content} /> : null}
       </Center>
       <Center>
-        {content ? <a href={content}>请 手机扫码 或 点击下载</a> : null}
+        {content ? <a href={content}>請 手機掃碼 或 點擊下載</a> : null}
       </Center>
       <Space />
       <Center>
-        <Button onClick={onClose}>关闭</Button>
+        <Button onClick={onClose}>關閉</Button>
       </Center>
     </Pop>
   );
@@ -120,13 +120,13 @@ export const showUploadFileSuccessDialog = ({ context, content }) => {
 export const showUploadFailDialog = () => {
   return createDialog(
     <Pop>
-      <div>上传失败</div>
-      <button onClick={() => close()}>关闭</button>
+      <div>上傳失敗</div>
+      <button onClick={() => close()}>關閉</button>
     </Pop>
   );
 };
 export const showUploadingDialog = () => {
-  return createDialog(<Loading>上传中</Loading>);
+  return createDialog(<Loading>上傳中</Loading>);
 };
 const Pop = styled.div`
   padding: 16px;

@@ -30,7 +30,7 @@ export const UploadTextForm = () => {
         />
       </div>
       <Center className="row">
-        <Button type="submit">上传</Button>
+        <Button type="submit">上傳</Button>
       </Center>
     </Form>
   );

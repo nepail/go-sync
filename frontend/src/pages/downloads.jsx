@@ -29,7 +29,7 @@ export const Downloads = () => {
           <BigTextarea readOnly value={text} />
           <Space />
           <Center virtical>
-            <Button>请手动复制上面文本</Button>
+            <Button>請手動複製上方文字</Button>
           </Center>
         </div>
       )
@@ -41,7 +41,7 @@ export const Downloads = () => {
             <svg><use xlinkHref="#icon-file"></use></svg>
             <Space />
             <Center>
-              <Button>点击下载文件</Button>
+              <Button>點擊下載檔案</Button>
             </Center>
           </a>
         </Center>
@@ -53,7 +53,7 @@ export const Downloads = () => {
           <a href={query.url}>
             <Picture src={query.url} />
             <Center>
-              <Button>长按或点击，即可下载图片</Button>
+              <Button>長按或點擊，即可下載圖片</Button>
             </Center>
           </a>
         </Center>
@@ -65,11 +65,11 @@ export const Downloads = () => {
   }
   return (
     <Layout>
-      <Header>同步传</Header>
+      <Header>同步傳</Header>
       {node}
       <Space x3 />
       <Center>
-        <Button onClick={onClickUpload}>我也要上传</Button>
+        <Button onClick={onClickUpload}>我也要上傳</Button>
       </Center>
     </Layout>
   )
