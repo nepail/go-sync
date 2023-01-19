@@ -8,7 +8,9 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/nepail/go-sync/config"
 	c "github.com/nepail/go-sync/server/controller"
+	"github.com/nepail/go-sync/server/ws"
 )
 
 // 把指定目錄的檔案嵌入到exe
@@ -16,8 +18,14 @@ import (
 //go:embed frontend/dist/*
 var FS embed.FS
 
+func init() {
+
+}
+
 func Run() {
-	port := "27149"
+	hub := ws.NewHub()
+	go hub.Run()
+
 	gin.SetMode(gin.DebugMode)
 	router := gin.Default()
 	// router.GET("/", func(c *gin.Context) {
@@ -29,6 +37,9 @@ func Run() {
 	router.GET("/uploads/:path", c.UploadsController)
 	router.GET("/api/v1/addresses", c.AddressesController)
 	router.POST("/api/v1/texts", c.TextsController)
+	router.GET("/ws", func(c *gin.Context) {
+		ws.HttpController(c, hub)
+	})
 	router.StaticFS("/static", http.FS(staticFiles))
 	router.NoRoute(func(c *gin.Context) {
 		path := c.Request.URL.Path
@@ -48,5 +59,5 @@ func Run() {
 			c.Status(404)
 		}
 	})
-	router.Run(":" + port)
+	router.Run(":" + config.GetPort())
 }

@@ -4,6 +4,7 @@ import (
 	"os"
 	"os/signal"
 
+	"github.com/nepail/go-sync/config"
 	"github.com/nepail/go-sync/server"
 	"github.com/zserge/lorca"
 	// "github.com/nepail/lorca"
@@ -45,7 +46,7 @@ func StartBrowser() lorca.UI {
 	// ui, _ = lorca.New("http://google.com", "", 800, 600, "--disable-sync", "--disable-translate")
 	// ui, _ = lorca.New("https://term.ptt.cc", "", 800, 600, "--disable-sync", "--disable-translate")
 	// localhost 不走代理，所以必須使用127.0.0.1
-	ui, _ = lorca.New("http://localhost:27149/static/index.html", "", 800, 600, "--disable-sync", "--disable-translate")
+	ui, _ = lorca.New("http://localhost:"+config.GetPort()+"/static/index.html", "", 800, 600, "--disable-sync", "--disable-translate")
 	return ui
 }
 
